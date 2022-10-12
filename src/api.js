@@ -5,7 +5,7 @@ const BASE_URL = 'https://u-o-b.herokuapp.com'
 
 export class CryptoApi{
     static async getTicker(endpoint='SOL'){
-        const url = `${BASE_URL}crypto/ticker/${endpoint}`
+        const url = `${BASE_URL}/crypto/ticker/${endpoint}`
         // const url = `${BASE_URL}/crypto/ticker/${endpoint}`
         const method = 'GET'
         try{
