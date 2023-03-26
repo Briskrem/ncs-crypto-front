@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const BASE_URL = "http://localhost:3003";
-const BASE_URL = 'https://u-o-b.herokuapp.com'
+const BASE_URL = "http://localhost:3003";
+// const BASE_URL = 'https://u-o-b.herokuapp.com'
 
 export class CryptoApi{
     static async getTicker(endpoint='SOL'){
