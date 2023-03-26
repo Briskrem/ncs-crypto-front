@@ -1,10 +1,10 @@
 import {Nav, NavbarContainer, NavLogo, MobileIcon, NavMenu, 
-NavItem, NavLinks, NavBtnLink, NavBtn} from './NavbarElements'
+        NavItem, NavLinks, NavBtnLink, NavBtn}  from './NavbarElements'
 import {FaBars} from 'react-icons/fa'
 
 export const Navbar = ({toggle}) => {
     return (
-        
+         
         <Nav>
             <NavbarContainer>
                 <NavLogo to={'/'}>NCS</NavLogo>
@@ -33,14 +33,3 @@ export const Navbar = ({toggle}) => {
         
     )
 }
-// export const Navbar = () => {
-//     return (
-//         <div>
-//             <nav>
-//                 <NavbarContainer>
-//                     <navLogo>dollar</navLogo>
-//                 </NavbarContainer>
-//             </nav>
-//         </div>
-//     )
-// }

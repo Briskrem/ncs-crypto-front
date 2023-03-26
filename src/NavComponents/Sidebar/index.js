@@ -1,10 +1,12 @@
-import { SideBarContainer, Icon, CloseIcon, SideBarWrapper, SideBarLink, SidebarRoute, SideBarMenu, SideBtnWrap , NavItem} from "./sbElements"
+import { SideBarContainer, Icon, CloseIcon, SideBarWrapper, SideBarLink, 
+    SidebarRoute, SideBarMenu, SideBtnWrap , NavItem} from "./sbElements"
 
 export const SideBar = ({isOpen, toggle}) => {
 
     return (
+        // isOpen is used here and not in Navbar because here is the entry point to aside css conditionals
         <SideBarContainer isOpen={isOpen} onClick={toggle}>
-            <Icon onClick={toggle}>
+            <Icon >
                 <CloseIcon />
             </Icon>
             <SideBarWrapper>
@@ -24,17 +26,8 @@ export const SideBar = ({isOpen, toggle}) => {
                     <NavItem>
                         <SideBarLink to='/'>LOGOUT</SideBarLink>
                     </NavItem>
-                    
-                    
-                    
-                    
-                    
                 </SideBarMenu>
-                {/* <SideBtnWrap>
-                    <SidebarRoute to='/'>Signin</SidebarRoute>
-                </SideBtnWrap> */}
-            </SideBarWrapper>
-            
+            </SideBarWrapper> 
         </SideBarContainer>
     )
 }

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import {Link as LinkR} from 'react-router-dom'
 import {Link as LinkS} from 'react-scroll'
-
+ 
 export const Nav = styled.nav`
     
     width: 100%;
@@ -42,7 +42,7 @@ export const NavLogo = styled(LinkR)`
 `
 export const MobileIcon = styled.div`
     display: none;
-
+ 
     @media screen and (max-width: 620px){
         display: block;
         position: absolute;
