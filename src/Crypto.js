@@ -20,7 +20,7 @@ export const Crypto = () => {
   // "WHEN" user enters CryptoName, USEEFFECT clientside turns on io-websocket to try connecting to backends, io-websocket. 
   // io on backend is turned on and connection is made. When backend succesfully opens stream from alpaca, it sends the stream id'd as meta
   useEffect(() =>{
-    socket = io.connect('http://localhost:3003');
+    socket = io('http://localhost:3003');
     // socket = io.connect('https://u-o-b.herokuapp.com')
 
     // listening for stream id'd as meta.
