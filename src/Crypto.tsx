@@ -6,7 +6,8 @@ import { Calculations } from './Calculations';
 import {re, ini} from './StarterCode'
 import { Graph } from './Graph';
 import './styles/Crypto.css'
-
+import { BarsData} from './Crypto.types';
+ 
 export const Crypto = () => {
 
   const [cryptoName, setCryptoName] = useState('')
@@ -25,7 +26,7 @@ export const Crypto = () => {
   // io on backend is turned on and connection is made. When backend succesfully opens stream from alpaca, it sends the stream id'd as meta
   useEffect(() =>{
     socket = io('http://localhost:3003');
-    // socket = io.connect('https://u-o-b.herokuapp.com')
+    // socket = io.('https://u-o-b.herokuapp.com')
 
     // listening for stream id'd as meta.
     socket.on("meta", data => {
@@ -48,18 +49,23 @@ export const Crypto = () => {
   //After user updates cryptoName, api requests are  made which turn on the io-websocket(connects to backend) &  ws-websocket(connects to alpaca servers)
   // Fetches cryptoPrice aand cryptoBars
   useEffect(()=>{
+    console.log(3333333333333333333333333333333333333333, 'cryptobars',cryptoBars)
     async function getData(){
         try{
+          // console.log(5555555555555555555555555555555)
           const results = await CryptoApi.getTicker(cryptoName)
         }catch(e){
             console.log(e)
         }
 
         try{
-          const results = await CryptoApi.getStats(cryptoName)
-          setCryptoBars(results?.data.data.bars)
+          // console.log(4444444444444444444444444444444, 'cryptoName',cryptoName)
+          const results : BarsData = await CryptoApi.getStats(cryptoName)
+          console.log('results44: ', results, results?.bars)
+          // setCryptoBars(results?.bars || re)
+          setCryptoBars(results.bars)
         }catch(e){
-          console.log(e)
+          console.log(e, '666666666666666666666666666')
         }
     }
     getData()
@@ -67,6 +73,7 @@ export const Crypto = () => {
 
   // When cryptoBars have been fetched and updated its now converted and convertedBars are updated.
   useEffect(()=>{
+    console.log(11111111111111111111111111111, 'calling calculations module', cryptoBars)
     const results = Calculations.calculate(cryptoBars)
     setConvertedBars(results)
   }, [cryptoBars])
@@ -75,6 +82,7 @@ export const Crypto = () => {
   // this gets bars for min, hr, day, week, month when clicked
   // apply memoiszation to this for optimization.
   const getCryptoCharts = async (time: string ) => {
+    console.log(2222222222222222222222222222222)
     let t = { timeframe: time }
     const results = await CryptoApi.getStats(cryptoName, t)
     setCryptoBars(results?.data.data.bars)

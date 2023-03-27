@@ -4,7 +4,7 @@ export class Calculations{
         console.log(data, 'data in calcullate')
         console.log(Object.values(data))
         data = Object.values(data)[0]
-        
+         
         let convertedArray = []
         // data.MSFT.map(candle => {
         data.map(candle => {

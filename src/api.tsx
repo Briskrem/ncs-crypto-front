@@ -1,4 +1,6 @@
-import axios from 'axios'
+import axios , { AxiosResponse }from 'axios'
+import { BarsData } from './Crypto.types';
+
 
 const BASE_URL = "http://localhost:3003";
 // const BASE_URL = 'https://u-o-b.herokuapp.com'
@@ -17,14 +19,15 @@ export class CryptoApi{
         }
     }
 
-    static async getStats(endpoint, data={timeframe:'1Day'}, method='GET'){
+    static async getStats(endpoint: string, data={timeframe:'1Day'}, method='GET'){
         const url = `${BASE_URL}/crypto/stats/${endpoint}`;  
         const params = (method == 'GET') ? data : {} 
         try{
-            const resp = await axios({url, method, params, data})
+            const resp : AxiosResponse<BarsData> = (await axios({url, method, params, data})).data.data
             return resp
         }catch(e){
             console.log(e)
+            // return e
         }
     }
 }
