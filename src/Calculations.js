@@ -1,13 +1,14 @@
 export class Calculations{
 
     static calculate(data){
-        console.log(data, 'data in calcullate')
+        console.log(data, 'data in calcullate@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         console.log(Object.values(data))
         data = Object.values(data)[0]
          
         let convertedArray = []
         // data.MSFT.map(candle => {
         data.map(candle => {
+            console.log(candle, 'CANDLE', candle.o, candle.t)
             let open = candle.o
             let high = candle.h
             let low = candle.l
@@ -21,7 +22,7 @@ export class Calculations{
 
             convertedArray.push(dat)
         })
-
+        console.log('10 10 10 10 10 10 10 10 10 10 10 10 10 convertedArrayIn Clcu', convertedArray )
         const initial = {
       
             series: [{
@@ -46,7 +47,7 @@ export class Calculations{
               }
             },
           };
-        // console.log(convertedArray, ' GIVE MEEEEE CHANGEEEEE PLEASEEEE')
+        console.log(initial, ' GIVE MEEEEE CHANGEEEEE PLEASEEEE')
 
         return initial
         

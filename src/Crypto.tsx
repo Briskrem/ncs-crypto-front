@@ -7,14 +7,14 @@ import {re, ini} from './StarterCode'
 import { Graph } from './Graph';
 import './styles/Crypto.css'
 import { BarsData} from './Crypto.types';
-import axios , { AxiosResponse }from 'axios'
+import { AxiosResponse }from 'axios'
 
  
 export const Crypto = () => {
 
   const [cryptoName, setCryptoName] = useState('')
   // const [newCryptoPrice, setnewCryptoPrice] = useState<number | null>(null)
-  const [newCryptoPrice, setnewCryptoPrice] = useState<number | string | null >(null)
+  const [newCryptoPrice, setnewCryptoPrice] = useState<number | string >('') // we dont put zero because the number zero will show up, we dont use null because we cant use null in null coaelsescing when determingnig price color
   const [cryptoBars, setCryptoBars] = useState<AxiosResponse<BarsData> | BarsData>(re)
   const [convertedBars, setConvertedBars] = useState(ini)
   const [priceColor, setPriceColor] = useState('yellow')
@@ -43,7 +43,7 @@ export const Crypto = () => {
   // As cryptoPrice updates so does its color, socket.io("meta") updates new crypto price, which triggers this useEffect,
   // which sets the newPrice as the oldPrice, so the next newPrice will be compared to the previous newPrice(odPrice)
   useEffect(()=>{
-    let color = !oldPrice || oldPrice === newCryptoPrice ? 'yellow' : newCryptoPrice!> oldPrice ? 'green' : 'red';
+    let color = !oldPrice || oldPrice === newCryptoPrice ? 'yellow' : newCryptoPrice ?? '' > oldPrice ? 'green' : 'red';
     setoldPrice(newCryptoPrice ?? null)
     setPriceColor(color)
   },[newCryptoPrice]);
@@ -62,11 +62,10 @@ export const Crypto = () => {
 
         try{
           console.log(4444444444444444444444444444444, 'cryptoName',cryptoName)
-          // const results : AxiosResponse<BarsData | undefined> = await CryptoApi.getStats(cryptoName)
           const results = await CryptoApi.getStats(cryptoName)
-
           console.log('results44: ', results, results)
-          setCryptoBars(results ?? re)
+          setCryptoBars(results ?? re) //error handling for undefined, TS forces this.
+          console.log('CRYPTOBARS2', cryptoBars) // even though results cameback undefined , cryptobars was still set to re (which is a good thing)
         }catch(e){
           console.log(e, '666666666666666666666666666')
         }
@@ -78,6 +77,7 @@ export const Crypto = () => {
   useEffect(()=>{
     console.log(11111111111111111111111111111, 'calling calculations module', cryptoBars)
     const results = Calculations.calculate(cryptoBars)
+    console.log('calculation results9999999999999',results)
     setConvertedBars(results)
   }, [cryptoBars])
 
