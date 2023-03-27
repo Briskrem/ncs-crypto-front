@@ -1,4 +1,4 @@
-import axios , { AxiosResponse, AxiosError }from 'axios'
+import axios , { AxiosResponse }from 'axios'
 import { BarsData } from './Crypto.types';
 
 
@@ -25,13 +25,13 @@ export class CryptoApi{
 
     static async getStats(endpoint: string, data={timeframe:'1Day'}, method='GET'){
         const url = `${BASE_URL}/crypto/stats/${endpoint}`;  
-        const params = (method == 'GET') ? data : {} 
+        const params = (method === 'GET') ? data : {} ;
         try{
-            const resp : AxiosResponse<BarsData> = (await axios({url, method, params, data})).data.data.bars
+            const resp : AxiosResponse<BarsData> = (await axios({url, method, params, data})).data.dataCrypto.bars;
             return resp
         }catch(e){
             console.log('error getSTATS',e)
             return null
         }
     }
-}
+};

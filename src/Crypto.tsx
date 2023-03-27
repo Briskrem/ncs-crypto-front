@@ -14,7 +14,7 @@ export const Crypto = () => {
 
   const [cryptoName, setCryptoName] = useState('')
   const [newCryptoPrice, setnewCryptoPrice] = useState<number | string >('') // we dont put zero because the number zero will show up, we dont use null because we cant use null in null coaelsescing when determingnig price color
-  const [cryptoBars, setCryptoBars] = useState<AxiosResponse<BarsData> | BarsData | string>(re)
+  const [cryptoBars, setCryptoBars] = useState<AxiosResponse<BarsData> | BarsData >(re)
   const [convertedBars, setConvertedBars] = useState(ini)
   const [priceColor, setPriceColor] = useState('yellow')
   const [oldPrice, setoldPrice] = useState<number | string | null>(null)
@@ -25,21 +25,20 @@ export const Crypto = () => {
 
 
   let socket;
-  // "WHEN" user enters CryptoName, USEEFFECT clientside turns on io-websocket to try connecting to backends, io-websocket. 
-  // io on backend is turned on and connection is made. When backend succesfully opens stream from alpaca, it sends the stream id'd as meta
+  // "WHEN" user enters CryptoName, USEEFFECT clientside turns on io-websocket to connect to backends io-websocket. 
+  // io on backend is turned on and connection is made. When backend succesfully opens stream from alpaca, it sends the stream ID'd as meta.
   useEffect(() =>{
     socket = io('http://localhost:3003');
     // socket = io.('https://u-o-b.herokuapp.com')
 
-    // listening for stream id'd as meta.
+    // listening for stream ID'd as meta.
     socket.on("meta", data => {
       let result = JSON.parse(data)
       let price = result[0].bp   
-      // setnewCryptoPrice(price.toFixed(3))
       setnewCryptoPrice(price)
     })
-    socket.connect()
-  },[cryptoName]);
+    socket.connect();
+  }, [cryptoName] );
 
 
 
@@ -53,7 +52,7 @@ export const Crypto = () => {
     let color = !oldPrice || oldPrice === newCryptoPrice ? 'yellow' : newCryptoPrice ?? '' > oldPrice ? 'green' : 'red';
     setoldPrice(newCryptoPrice ?? null)
     setPriceColor(color)
-  },[newCryptoPrice]);
+  }, [newCryptoPrice] );
 
 
 
@@ -61,7 +60,7 @@ export const Crypto = () => {
 
 
   //After user updates cryptoName, api requests are  made which turn on the io-websocket(connects to backend) &  ws-websocket(connects to alpaca servers)
-  // Fetches cryptoPrice aand cryptoBars
+  // Turns on cryptoPriceStream and fetches cryptoBars
   useEffect(()=>{
     async function getData(){
         try{
@@ -72,13 +71,13 @@ export const Crypto = () => {
 
         try{
           const results = await CryptoApi.getStats(cryptoName)
-          setCryptoBars(results ?? re) //error handling for undefined IF CRYPTONAME NOT FOUND, TS forces this. AND setState takes effect after exiting useHook
+          setCryptoBars(results ?? re) //error handling for undefined IF CRYPTONAME NOT FOUND, TS forces this.
         }catch(e){
           console.log(e)
         }
     }
     getData()
-  },[cryptoName])
+  }, [cryptoName] )
 
 
 
@@ -87,7 +86,7 @@ export const Crypto = () => {
 
   // When cryptoBars have been fetched and updated its now converted and convertedBars are updated.
   useEffect(()=>{
-    const results = Calculations.calculate(cryptoBars)
+    const results = Calculations.calculate(cryptoBars);
     setConvertedBars(results)
   }, [cryptoBars])
 
@@ -98,9 +97,9 @@ export const Crypto = () => {
 
 
   // Unlike previous CryptoApi.getStats above, which gets bar for the initial request, this gets bars for min, hr, day, week, month when clicked apply memoiszation to this for optimization.
-  const getCryptoCharts = async (time: string ) => {
+  const getCryptoCharts = async ( time: string ) => {
     let t = { timeframe: time }
-    const results = await CryptoApi.getStats(cryptoName, t)
+    const results = await CryptoApi.getStats(cryptoName, t);
     setCryptoBars(results ?? re)
   } 
 
