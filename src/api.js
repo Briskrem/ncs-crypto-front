@@ -24,7 +24,8 @@ export class CryptoApi{
             const resp = await axios({url, method, params, data})
             return resp
         }catch(e){
-            console.log(e)
+            console.log(e, 'errrr')
+            return e
         }
     }
 }

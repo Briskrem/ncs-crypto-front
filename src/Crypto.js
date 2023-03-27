@@ -52,10 +52,13 @@ export const Crypto = () => {
         }
 
         try{
+          
           const results = await CryptoApi.getStats(cryptoName)
+          console.log('results44: ', results, results)
+
           setCryptoBars(results.data.data.bars)
         }catch(e){
-          console.log(e)
+          console.log(e,'CRRR ERRR')
         }
     }
     getData()
