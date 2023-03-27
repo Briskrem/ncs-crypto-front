@@ -1,11 +1,14 @@
-// export type BarsData = {
-//     bars?: { c: number; h: number; l: number; n: number; o: number; t: string; v: number; vw: number; }[]
-// }
-export interface BarsData  {
-    bars: { c: number; h: number; l: number; n: number; o: number; t: string; v: number; vw: number; }[]
+
+
+type DynamicObject = {
+    [key: string]: string | number;
+  };
+  
+export type BarsData = { 
+    [key: string] : DynamicObject[]; 
 }
-// export type BarsData2 = {
-//     bars: {
-//         [key: string|number]: Object[]
-//     }
+
+//   export interface BarsData  {
+//     [key: string]: { c: number; h: number; l: number; n: number; o: number; t: string; v: number; vw: number; }[]
 // }
+  

@@ -13,17 +13,18 @@ import { AxiosResponse }from 'axios'
 export const Crypto = () => {
 
   const [cryptoName, setCryptoName] = useState('')
-  // const [newCryptoPrice, setnewCryptoPrice] = useState<number | null>(null)
   const [newCryptoPrice, setnewCryptoPrice] = useState<number | string >('') // we dont put zero because the number zero will show up, we dont use null because we cant use null in null coaelsescing when determingnig price color
-  const [cryptoBars, setCryptoBars] = useState<AxiosResponse<BarsData> | BarsData>(re)
+  const [cryptoBars, setCryptoBars] = useState<AxiosResponse<BarsData> | BarsData | string>(re)
   const [convertedBars, setConvertedBars] = useState(ini)
   const [priceColor, setPriceColor] = useState('yellow')
   const [oldPrice, setoldPrice] = useState<number | string | null>(null)
   
-  let socket;
-  // const client: SocketIOClient.Socket = io('http://localhost');
-  // let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io()
 
+
+
+
+
+  let socket;
   // "WHEN" user enters CryptoName, USEEFFECT clientside turns on io-websocket to try connecting to backends, io-websocket. 
   // io on backend is turned on and connection is made. When backend succesfully opens stream from alpaca, it sends the stream id'd as meta
   useEffect(() =>{
@@ -40,6 +41,12 @@ export const Crypto = () => {
     socket.connect()
   },[cryptoName]);
 
+
+
+
+
+
+
   // As cryptoPrice updates so does its color, socket.io("meta") updates new crypto price, which triggers this useEffect,
   // which sets the newPrice as the oldPrice, so the next newPrice will be compared to the previous newPrice(odPrice)
   useEffect(()=>{
@@ -48,48 +55,59 @@ export const Crypto = () => {
     setPriceColor(color)
   },[newCryptoPrice]);
 
+
+
+
+
+
   //After user updates cryptoName, api requests are  made which turn on the io-websocket(connects to backend) &  ws-websocket(connects to alpaca servers)
   // Fetches cryptoPrice aand cryptoBars
   useEffect(()=>{
-    console.log(3333333333333333333333333333333333333333, 'cryptobars',cryptoBars,re, 'cryptoName:', cryptoName)
     async function getData(){
         try{
-          console.log(5555555555555555555555555555555)
           const results = await CryptoApi.getTicker(cryptoName)
         }catch(e){
             console.log(e)
         }
 
         try{
-          console.log(4444444444444444444444444444444, 'cryptoName',cryptoName)
           const results = await CryptoApi.getStats(cryptoName)
-          console.log('results44: ', results, results)
-          setCryptoBars(results ?? re) //error handling for undefined, TS forces this.
-          console.log('CRYPTOBARS2', cryptoBars) // even though results cameback undefined , cryptobars was still set to re (which is a good thing)
+          setCryptoBars(results ?? re) //error handling for undefined IF CRYPTONAME NOT FOUND, TS forces this. AND setState takes effect after exiting useHook
         }catch(e){
-          console.log(e, '666666666666666666666666666')
+          console.log(e)
         }
     }
     getData()
   },[cryptoName])
 
+
+
+
+
+
   // When cryptoBars have been fetched and updated its now converted and convertedBars are updated.
   useEffect(()=>{
-    console.log(11111111111111111111111111111, 'calling calculations module', cryptoBars)
     const results = Calculations.calculate(cryptoBars)
-    console.log('calculation results9999999999999',results)
     setConvertedBars(results)
   }, [cryptoBars])
 
-  // Unlike previous CryptoApi.getStats above, which gets bar for the initial request, 
-  // this gets bars for min, hr, day, week, month when clicked
-  // apply memoiszation to this for optimization.
+
+
+
+
+
+
+  // Unlike previous CryptoApi.getStats above, which gets bar for the initial request, this gets bars for min, hr, day, week, month when clicked apply memoiszation to this for optimization.
   const getCryptoCharts = async (time: string ) => {
-    console.log(2222222222222222222222222222222)
     let t = { timeframe: time }
     const results = await CryptoApi.getStats(cryptoName, t)
     setCryptoBars(results ?? re)
   } 
+
+
+
+
+
 
   //this function called by formComponent, onSubmit and updates the cryptoName to fetch streamData
   const getCryptoName = (data: string) => {
@@ -97,6 +115,8 @@ export const Crypto = () => {
   }
     
       
+
+
     
   return (
     <div className='crypto-body'>
