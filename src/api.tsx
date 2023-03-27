@@ -23,7 +23,7 @@ export class CryptoApi{
         const url = `${BASE_URL}/crypto/stats/${endpoint}`;  
         const params = (method == 'GET') ? data : {} 
         try{
-            const resp : AxiosResponse<BarsData> = (await axios({url, method, params, data})).data.data
+            const resp : AxiosResponse<BarsData> | undefined | null = (await axios({url, method, params, data})).data.data.bars
             return resp
         }catch(e){
             console.log(e)

@@ -1,4 +1,6 @@
 //this is converted/processed
+import { BarsData} from './Crypto.types';
+
 export const ini = {
       
     series: [{
@@ -39,12 +41,13 @@ export const ini = {
       }
     },
   };
-
+ 
 
 // this is not converted (RAW)
-export const re = [[
+export const re: BarsData = {
+  bars: [[
     {c : 0, h: 0, l:0, n:0, o:0, t:"2017-10-13T04:00:00Z",v:15335742, vw:77.514716 }
-    ]]
+    ]]}
 // export const re = [[
 //       {c : 77.12, h : 77.29, l : 76.37, n : 100377, o : 76.4, t : "2017-10-12T04:00:00Z", v : 17281202, vw : 77.01185},
 //       {c : 77.49 , h: 77.87, l:77.29, n:85776, o:77.57, t:"2017-10-13T04:00:00Z",v:15335742, vw:77.514716 }

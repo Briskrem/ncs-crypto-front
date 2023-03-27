@@ -7,13 +7,15 @@ import {re, ini} from './StarterCode'
 import { Graph } from './Graph';
 import './styles/Crypto.css'
 import { BarsData} from './Crypto.types';
+import axios , { AxiosResponse }from 'axios'
+
  
 export const Crypto = () => {
 
   const [cryptoName, setCryptoName] = useState('')
   // const [newCryptoPrice, setnewCryptoPrice] = useState<number | null>(null)
   const [newCryptoPrice, setnewCryptoPrice] = useState<number | string | null >(null)
-  const [cryptoBars, setCryptoBars] = useState(re)
+  const [cryptoBars, setCryptoBars] = useState<AxiosResponse<BarsData> | BarsData>(re)
   const [convertedBars, setConvertedBars] = useState(ini)
   const [priceColor, setPriceColor] = useState('yellow')
   const [oldPrice, setoldPrice] = useState<number | string | null>(null)
@@ -49,7 +51,7 @@ export const Crypto = () => {
   //After user updates cryptoName, api requests are  made which turn on the io-websocket(connects to backend) &  ws-websocket(connects to alpaca servers)
   // Fetches cryptoPrice aand cryptoBars
   useEffect(()=>{
-    console.log(3333333333333333333333333333333333333333, 'cryptobars',cryptoBars)
+    console.log(3333333333333333333333333333333333333333, 'cryptobars',cryptoBars,re)
     async function getData(){
         try{
           // console.log(5555555555555555555555555555555)
@@ -60,10 +62,12 @@ export const Crypto = () => {
 
         try{
           // console.log(4444444444444444444444444444444, 'cryptoName',cryptoName)
-          const results : BarsData = await CryptoApi.getStats(cryptoName)
-          console.log('results44: ', results, results?.bars)
+          // const results : AxiosResponse<BarsData | undefined> = await CryptoApi.getStats(cryptoName)
+          const results = await CryptoApi.getStats(cryptoName)
+
+          console.log('results44: ', results, results)
           // setCryptoBars(results?.bars || re)
-          setCryptoBars(results.bars)
+          setCryptoBars(results ?? re)
         }catch(e){
           console.log(e, '666666666666666666666666666')
         }
@@ -85,7 +89,8 @@ export const Crypto = () => {
     console.log(2222222222222222222222222222222)
     let t = { timeframe: time }
     const results = await CryptoApi.getStats(cryptoName, t)
-    setCryptoBars(results?.data.data.bars)
+    setCryptoBars(results || re)
+    // setCryptoBars(results?.data.data.bars)
   } 
 
   //this function called by formComponent, onSubmit and updates the cryptoName to fetch streamData
