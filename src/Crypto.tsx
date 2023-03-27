@@ -64,13 +64,13 @@ export const Crypto = () => {
   useEffect(()=>{
     async function getData(){
         try{
-          const results = await CryptoApi.getTicker(cryptoName)
+          const results = await CryptoApi.getTicker(cryptoName);
         }catch(e){
             console.log(e)
         }
 
         try{
-          const results = await CryptoApi.getStats(cryptoName)
+          const results = await CryptoApi.getStats(cryptoName);
           setCryptoBars(results ?? re) //error handling for undefined IF CRYPTONAME NOT FOUND, TS forces this.
         }catch(e){
           console.log(e)

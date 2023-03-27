@@ -31,7 +31,7 @@ export class CryptoApi{
             return resp
         }catch(e){
             console.log('error getSTATS',e)
-            return null
+            return null  // Error Handled by returning null so that ...setCryptoBars(results ?? re) in Crypto.tsx will display re in graph
         }
     }
 };
