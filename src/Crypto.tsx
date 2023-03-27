@@ -51,22 +51,21 @@ export const Crypto = () => {
   //After user updates cryptoName, api requests are  made which turn on the io-websocket(connects to backend) &  ws-websocket(connects to alpaca servers)
   // Fetches cryptoPrice aand cryptoBars
   useEffect(()=>{
-    console.log(3333333333333333333333333333333333333333, 'cryptobars',cryptoBars,re)
+    console.log(3333333333333333333333333333333333333333, 'cryptobars',cryptoBars,re, 'cryptoName:', cryptoName)
     async function getData(){
         try{
-          // console.log(5555555555555555555555555555555)
+          console.log(5555555555555555555555555555555)
           const results = await CryptoApi.getTicker(cryptoName)
         }catch(e){
             console.log(e)
         }
 
         try{
-          // console.log(4444444444444444444444444444444, 'cryptoName',cryptoName)
+          console.log(4444444444444444444444444444444, 'cryptoName',cryptoName)
           // const results : AxiosResponse<BarsData | undefined> = await CryptoApi.getStats(cryptoName)
           const results = await CryptoApi.getStats(cryptoName)
 
           console.log('results44: ', results, results)
-          // setCryptoBars(results?.bars || re)
           setCryptoBars(results ?? re)
         }catch(e){
           console.log(e, '666666666666666666666666666')
@@ -89,8 +88,7 @@ export const Crypto = () => {
     console.log(2222222222222222222222222222222)
     let t = { timeframe: time }
     const results = await CryptoApi.getStats(cryptoName, t)
-    setCryptoBars(results || re)
-    // setCryptoBars(results?.data.data.bars)
+    setCryptoBars(results ?? re)
   } 
 
   //this function called by formComponent, onSubmit and updates the cryptoName to fetch streamData
