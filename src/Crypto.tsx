@@ -49,7 +49,7 @@ export const Crypto = () => {
   // As cryptoPrice updates so does its color, socket.io("meta") updates new crypto price, which triggers this useEffect,
   // which sets the newPrice as the oldPrice, so the next newPrice will be compared to the previous newPrice(odPrice)
   useEffect(()=>{
-    let color = !oldPrice || oldPrice === newCryptoPrice ? 'yellow' : newCryptoPrice ?? '' > oldPrice ? 'green' : 'red';
+    let color = !oldPrice || oldPrice === newCryptoPrice ? 'yellow' : newCryptoPrice > oldPrice ? 'green' : 'red';
     setoldPrice(newCryptoPrice ?? null)
     setPriceColor(color)
   }, [newCryptoPrice] );
